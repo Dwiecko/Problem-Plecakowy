@@ -129,12 +129,11 @@
             {
                 for (int v = 0; v < valuesSum; v++)
                 {
-                    if (i >= 0)
+                    if (v == 0)
                     {
                         matrix[i, 0] = 0;
                     }
-
-                    if (i == 0)
+                    else if (i == 0)
                     {
                         matrix[0, v] = itemsValues[i] == v ? itemsSizes[i] : Infinity;
                     }
