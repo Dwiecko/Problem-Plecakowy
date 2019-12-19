@@ -6,8 +6,11 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    #endregion
+    #endregion Usings
 
+    /// <summary>
+    ///     Represents the backpack.
+    /// </summary>
     public class BackPack
     {
         #region Constants
@@ -17,60 +20,9 @@
         /// </summary>
         private const int Infinity = short.MaxValue;
 
-        #endregion
-
-        #region Extensions
-
-        /// <summary>
-        ///     The slice multidimensional array for given row.
-        /// </summary>
-        /// <param name="array">
-        ///     The multidimensional array to slice by row.
-        /// </param>
-        /// <param name="row">
-        ///     The multidimensional array row to get.
-        /// </param>
-        /// <returns>
-        ///     The sliced multidimensional array by given row.
-        /// </returns>
-        private static IEnumerable<int> SliceArrayByRow(int[,] array, int row)
-        {
-            for (var i = array.GetLowerBound(1); i <= array.GetUpperBound(1); i++)
-            {
-                yield return array[row, i];
-            }
-        }
-
-        #endregion
+        #endregion Constants
 
         #region Methods
-
-        /// <summary>
-        ///     The recusive get highest backpack value for given size.
-        /// </summary>
-        /// <param name="itemsSizes">
-        ///     The backpack items sizes.
-        /// </param>
-        /// <param name="itemsValues">
-        ///     The backpack items sizes.
-        /// </param>
-        /// <param name="numberOfItems">
-        ///     The number of items.
-        /// </param>
-        /// <param name="index">
-        ///     The maximum size of backpack items.
-        /// </param>
-        /// <returns>
-        ///     The highest backpack value for given size.
-        /// </returns>
-        public int RecursiveGetHighestBackpackValue(ref int[] itemsValues, ref int[] itemsSizes, int numberOfItems, int index)
-        {
-            if (index == 1) return numberOfItems < itemsSizes[1] ? 0 : itemsValues[1];
-            if (numberOfItems < itemsValues[index]) return RecursiveGetHighestBackpackValue(ref itemsValues, ref itemsSizes, index - 1, numberOfItems);
-
-            return Math.Max(RecursiveGetHighestBackpackValue(ref itemsValues, ref itemsSizes, index - 1, numberOfItems),
-                RecursiveGetHighestBackpackValue(ref itemsValues, ref itemsSizes, index - 1, numberOfItems - itemsSizes[index]) + itemsValues[index]);
-        }
 
         /// <summary>
         ///     The highest backpack items value for given size.
@@ -90,7 +42,7 @@
         /// <returns>
         ///     The highest backpack value for given size.
         /// </returns>
-        public int GetHighestBackpackValue(ref int[] itemsValues, ref int[] itemsSizes, int numberOfItems, int itemsMaxSize)
+        public static int GetHighestBackpackValue(ref int[] itemsValues, ref int[] itemsSizes, int numberOfItems, int itemsMaxSize)
         {
             var matrix = new int[numberOfItems, itemsMaxSize + 1];
             for (int i = 0; i < numberOfItems; i++)
@@ -121,7 +73,7 @@
         /// <summary>
         ///     Get lowest backpack size for given value.
         /// </summary>
-        public int GetLowestBackpackSize(ref int[] itemsValues, ref int[] itemsSizes, int numberOfItems, int itemsMaxSize)
+        public static int GetLowestBackpackSize(ref int[] itemsValues, ref int[] itemsSizes, int numberOfItems, int itemsMaxSize)
         {
             var valuesSum = itemsValues.Sum() + 1;
             var matrix = new int[numberOfItems, valuesSum];
@@ -158,6 +110,30 @@
             return rowValues.IndexOf(maxSize);
         }
 
-        #endregion
+        #endregion Methods
+
+        #region Extensions
+
+        /// <summary>
+        ///     The slice multidimensional array for given row.
+        /// </summary>
+        /// <param name="array">
+        ///     The multidimensional array to slice by row.
+        /// </param>
+        /// <param name="row">
+        ///     The multidimensional array row to get.
+        /// </param>
+        /// <returns>
+        ///     The sliced multidimensional array by given row.
+        /// </returns>
+        private static IEnumerable<int> SliceArrayByRow(int[,] array, int row)
+        {
+            for (var i = array.GetLowerBound(1); i <= array.GetUpperBound(1); i++)
+            {
+                yield return array[row, i];
+            }
+        }
+
+        #endregion Extensions
     }
 }
